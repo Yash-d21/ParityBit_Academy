@@ -1,20 +1,50 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🛡️ ParityBit Academy - Cybersecurity Masterclass
 
-# Run and deploy your AI Studio app
+A premium, high-conversion cybersecurity enrollment platform and Learning Management System (LMS) prototype. Designed for elite defensive and offensive cyber training.
 
-This contains everything you need to run your app locally.
+## 🚀 Deployment (Vercel)
 
-View your app in AI Studio: https://ai.studio/apps/703cf67d-7c16-45eb-9ba3-5823ba0ad5cf
+1. **Push to GitHub**: Already completed to `Yash-d21/ParityBit_Academy`.
+2. **Connect to Vercel**: Import the repository in your Vercel Dashboard.
+3. **Configure Environment Variables**:
+   Add the following in Vercel Project Settings > Environment Variables:
+   - `VITE_SUPABASE_URL` = (Your Supabase URL)
+   - `VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY` = (Your Supabase Anon Key)
+4. **Build Settings**:
+   - Framework Preset: **Vite**
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
 
-## Run Locally
+## 🗄️ Database Setup (Supabase)
 
-**Prerequisites:**  Node.js
+Run this SQL in your Supabase SQL Editor to enable the student profile tracking:
 
+```sql
+create table public.profiles (
+  id uuid references auth.users on delete cascade not null primary key,
+  full_name text,
+  email text,
+  payment_status text default 'pending',
+  updated_at timestamp with time zone default now(),
+  constraint payment_status_check check (payment_status in ('pending', 'completed'))
+);
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+alter table public.profiles enable row level security;
+
+create policy "Users can view own profile" on public.profiles for select using (auth.uid() = id);
+create policy "Users can update own profile" on public.profiles for update using (auth.uid() = id);
+create policy "Users can insert own profile" on public.profiles for insert with check (auth.uid() = id);
+```
+
+## 🛠️ Local Development
+
+1. **Install Dependencies**: `npm install`
+2. **Setup .env**: Copy `.env.example` to `.env` and add your Supabase credentials.
+3. **Run Dev Server**: `npm run dev`
+
+## ✨ Features
+
+- **Dynamic Enrollment Funnel**: Smart routing based on student payment status.
+- **Supabase Auth**: Real-time session management and profile syncing.
+- **Premium UI**: Dark-themed, high-performance interface with glassmorphism and smooth animations.
+- **Responsive Navigation**: Context-aware student header with initials-based avatars.
