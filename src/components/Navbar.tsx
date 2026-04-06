@@ -110,7 +110,7 @@ export default function Navbar({
   };
 
   return (
-    <header className="absolute top-0 left-0 right-0 z-[100] px-4 md:px-6 py-4">
+    <header className="absolute top-[36px] left-0 right-0 z-[100] pt-4 px-4 md:px-6 pb-4 md:top-[40px]">
       <div className="max-w-7xl mx-auto">
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-10">

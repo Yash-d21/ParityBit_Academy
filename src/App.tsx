@@ -17,6 +17,8 @@ import Payment from './pages/Payment';
 import Dashboard from './pages/Dashboard';
 import { AuthProvider } from './context/AuthContext';
 import ScrollToTop from './components/ScrollToTop';
+import PromotionalPopup from './components/PromotionalPopup';
+import SaleTimerMarquee from './components/SaleTimerMarquee';
 
 function AppContent() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,7 +28,12 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-[#FBFBF7] text-[#1A122E] font-sans selection:bg-[#7B2CBF]/20 selection:text-[#7B2CBF] overflow-x-clip">
-      {!isAuthPage && <Navbar />}
+      {!isAuthPage && (
+        <div className="relative">
+          <SaleTimerMarquee />
+          <Navbar />
+        </div>
+      )}
       
       <div 
         className={`transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] origin-center bg-[#FBFBF7] min-h-screen ${
@@ -51,6 +58,7 @@ function AppContent() {
         </main>
         {!isAuthPage && <Footer />}
       </div>
+      {!isAuthPage && <PromotionalPopup />}
     </div>
   );
 }
