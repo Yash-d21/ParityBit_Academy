@@ -97,7 +97,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="text-lg md:text-xl text-slate-600 font-medium max-w-3xl mx-auto mb-10 leading-relaxed"
         >
-          Become a security expert with the <strong className="text-[#1A122E]">best cybersecurity course for beginners in India</strong>. Master ethical hacking online, SOC operations, and VAPT with an industry-recognized certification and 2-month applied internship.
+          Become a security expert with the <strong className="text-[#1A122E]">best cybersecurity course for beginners in India</strong>. Master ethical hacking online, SOC operations, and VAPT with an industry-recognized certification and <strong className="text-gradient-purple-neon">2-month applied internship</strong>.
         </motion.p>
 
         {/* CTA Buttons */}

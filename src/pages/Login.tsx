@@ -345,8 +345,11 @@ export default function Login() {
       <div className="relative hidden lg:flex flex-col justify-between bg-gradient-to-br from-[#1A122E] via-[#241B3D] to-[#1A122E] p-12 text-white overflow-hidden">
         <div className="relative z-20">
           <Link to="/" className="flex items-center gap-3 text-lg font-semibold hover:opacity-80 transition-opacity">
-            <img src="/footer_logo.png" className="h-10 md:h-12 w-auto object-contain bg-white/10 p-1.5 rounded-lg backdrop-blur-sm border border-white/20" alt="Logo" />
-            <span className="tracking-tight font-black uppercase text-xs tracking-[0.25em]">ParityBit Academy_</span>
+            <img src="/icon.png" className="h-10 md:h-12 w-auto object-contain" alt="Logo" />
+            <div className="flex flex-col leading-none text-white font-black text-xl tracking-tighter">
+              <span>ParityBit</span>
+              <span className="text-[#c77dff]">Academy&gt;</span>
+            </div>
           </Link>
         </div>
 
@@ -546,8 +549,11 @@ export default function Login() {
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center justify-center gap-2 text-lg font-semibold mb-12">
             <Link to="/" className="flex items-center gap-3">
-              <img src="/footer_logo.png" className="h-10 w-auto object-contain" alt="Logo" />
-              <span className="tracking-tighter font-black text-xl text-[#1A122E]">ParityBit Academy_</span>
+              <img src="/icon.png" className="h-10 w-auto object-contain" alt="Logo" />
+              <div className="flex flex-col leading-none text-[#1A122E] font-black text-xl tracking-tighter">
+                <span>ParityBit</span>
+                <span className="text-[#c77dff]">Academy&gt;</span>
+              </div>
             </Link>
           </div>
 

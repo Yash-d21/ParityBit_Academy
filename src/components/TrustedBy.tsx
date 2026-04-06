@@ -7,10 +7,6 @@ const logos = [
     alt: "Deloitte Logo",
   },
   {
-    src: "/codec-networks.png",
-    alt: "Codec Networks Logo",
-  },
-  {
     src: "/nasscom.png",
     alt: "NASSCOM Logo",
   },

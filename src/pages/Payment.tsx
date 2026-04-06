@@ -6,6 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { supabase } from "../utils/supabase";
 
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+
 export default function Payment() {
   const navigate = useNavigate();
   const { user, profile, loading, refreshProfile } = useAuth();
@@ -31,46 +37,73 @@ export default function Payment() {
     }
     
     setErrorMessage("");
-    setStatus("processing");
-    console.log("Initiating payment processing for user:", user.id);
+    const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
     
-    // Simulate Razorpay loading/redirect (Reduced time for snappy feel)
-    setTimeout(async () => {
-      try {
-        console.log("Updating payment status in DB...");
-        // Using upsert as a safety measure in case profile creation was skipped
-        const { error } = await supabase
-          .from('profiles')
-          .upsert({ 
-            id: user.id, 
-            payment_status: 'completed',
-            email: user.email,
-            full_name: profile?.full_name || user.user_metadata?.full_name || ""
-          });
+    if (!razorpayKey) {
+      setErrorMessage("Payment gateway configuration missing.");
+      return;
+    }
 
-        if (error) {
-          console.error("Supabase payment update error:", error);
-          setErrorMessage(`Update Failed: ${error.message}`);
+    const options = {
+      key: razorpayKey,
+      amount: 118000, // ₹1,180 in paise
+      currency: "INR",
+      name: "ParityBit Academy",
+      description: "Zero to Hero Masterclass Enrollment",
+      image: "/footer_logo.png",
+      handler: async function (response: any) {
+        console.log("Razorpay payment successful:", response.razorpay_payment_id);
+        setStatus("processing");
+        
+        try {
+          console.log("Updating enrollment in database...");
+          const { error } = await supabase
+            .from('profiles')
+            .upsert({ 
+              id: user.id, 
+              payment_status: 'completed',
+              email: user.email,
+              full_name: profile?.full_name || user.user_metadata?.full_name || ""
+            });
+
+          if (error) {
+            console.error("Supabase update error:", error);
+            setErrorMessage(`Enrollment Update Failed: ${error.message}`);
+            setStatus("idle");
+          } else {
+            await refreshProfile();
+            setStatus("success");
+            setTimeout(() => {
+              navigate("/dashboard");
+            }, 800);
+          }
+        } catch (err: any) {
+          console.error("Post-payment sync error:", err);
+          setErrorMessage("Failed to sync enrollment. Please contact support.");
           setStatus("idle");
-        } else {
-          console.log("DB Update Successful, refreshing local profile...");
-          // Immediately refresh the profile state
-          await refreshProfile();
-          
-          console.log("Profile refreshed, setting success state...");
-          setStatus("success");
-          
-          setTimeout(() => {
-            console.log("Finalizing navigation to dashboard...");
-            navigate("/dashboard");
-          }, 800);
         }
-      } catch (err: any) {
-        console.error("Payment update catch error:", err);
-        setErrorMessage("An unexpected error occurred during payment processing.");
-        setStatus("idle");
+      },
+      prefill: {
+        name: profile?.full_name || "",
+        email: user.email || "",
+      },
+      theme: {
+        color: "#7B2CBF",
+      },
+      modal: {
+        ondismiss: function() {
+          setStatus("idle");
+        }
       }
-    }, 1000);
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.on('payment.failed', function (response: any) {
+      console.error("Razorpay payment failed:", response.error);
+      setErrorMessage(`Payment Failed: ${response.error.description}`);
+    });
+    
+    rzp.open();
   };
 
   return (

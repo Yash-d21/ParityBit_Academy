@@ -40,7 +40,7 @@ highlights4 cards: Self-Paced Learning, Live Weekly Sessions, Applied Internship
 CyberMasteryX Certification
 5Program
 OverviewWhat the
-program coversDark section with text + visual. Highlight: offensive security, defensive
+program coversDark section with text + visual. Highlight: Applied offensive security, defensive
 operations, incident response, hands-on labs
 6Feature GridDetailed benefits6 items in 3-column grid: 70 Video Lessons, Hands-On Labs, Capstone
 Project, SOC & Pentest Roles, MITRE ATT&CK, Industry Tools (Splunk,

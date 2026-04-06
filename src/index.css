@@ -86,7 +86,7 @@ body {
   font-family: var(--font-sans);
   background-color: var(--color-deep-navy);
   color: var(--color-slate-muted);
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;

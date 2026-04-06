@@ -9,13 +9,13 @@ import { useAuth } from '../context/AuthContext';
 export default function Pricing() {
   const navigate = useNavigate();
   const { user, profile } = useAuth();
-  
+
   const handleEnroll = () => {
     if (!user) {
       navigate('/signup');
       return;
     }
-    
+
     if (profile?.payment_status === 'completed') {
       navigate('/dashboard');
     } else {
@@ -26,7 +26,7 @@ export default function Pricing() {
   return (
     <section id="pricing" className="py-24 relative bg-[#FBFBF7]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
-        
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ export default function Pricing() {
         </motion.div>
 
         {/* Timer badge */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -81,8 +81,8 @@ export default function Pricing() {
               className="rounded-[24px]"
               title="Cybersecurity Masterclass"
               description="Complete access from zero to advanced."
-              price={1000}
-              originalPrice={5000}
+              price={999}
+              originalPrice={4999}
               buttonText={!user ? "Enroll Now & Start Learning" : (profile?.payment_status === 'completed' ? "Access My Course" : "Complete Your Enrollment")}
               onButtonClick={handleEnroll}
               features={[
@@ -102,9 +102,9 @@ export default function Pricing() {
               ]}
             />
           </BorderGlow>
-          
+
           {/* Footer strip */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -114,7 +114,7 @@ export default function Pricing() {
             <Shield className="w-3.5 h-3.5" />
             Secure checkout via Razorpay · 7-day money-back guarantee
           </motion.div>
-          
+
         </motion.div>
       </div>
     </section>

@@ -13,14 +13,7 @@ const testimonials = [
     body: 'The hands-on labs were a game-changer. I went from knowing basic networking to analyzing real malware traffic in Wireshark. The internship directly helped me land my current job.',
     rating: 5,
   },
-  {
-    name: 'Priya Patel',
-    role: 'Junior Pentester',
-    company: 'Codec Networks',
-    img: 'https://picsum.photos/seed/priya/100/100',
-    body: "Harshit's teaching style is incredible — complex cryptography and application security concepts broken down into digestible, practical lessons. Best ₹1,000 I ever spent.",
-    rating: 5,
-  },
+
   {
     name: 'Amit Kumar',
     role: 'Security Engineer',

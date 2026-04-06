@@ -16,7 +16,7 @@ export function FeatureCard({ feature, className, ...props }: FeatureCardProps) 
   const p = genRandomPattern();
 
   return (
-    <div className={cn('relative overflow-hidden p-6', className)} {...props}>
+    <div className={cn('relative overflow-hidden p-10', className)} {...props}>
       <div className="pointer-events-none absolute top-0 left-1/2 -mt-2 -ml-20 h-full w-full [mask-image:linear-gradient(white,transparent)]">
         <div className="from-foreground/5 to-foreground/1 absolute inset-0 bg-gradient-to-r [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] opacity-100">
           <GridPattern
@@ -29,14 +29,14 @@ export function FeatureCard({ feature, className, ...props }: FeatureCardProps) 
           />
         </div>
       </div>
-      <feature.icon className="text-foreground/75 size-6" strokeWidth={1} aria-hidden />
+      <feature.icon className="text-foreground/75 size-10" strokeWidth={1} aria-hidden />
       {feature.tag && (
-        <span className="mt-4 inline-block text-[10px] font-black uppercase tracking-[0.2em] text-[#7B2CBF]">
+        <span className="mt-4 inline-block text-xs font-black uppercase tracking-[0.2em] text-[#7B2CBF]">
           {feature.tag}
         </span>
       )}
-      <h3 className="mt-3 text-sm font-black tracking-tight text-[#1A122E] md:text-base">{feature.title}</h3>
-      <p className="relative z-20 mt-2 text-xs font-light leading-relaxed text-[#524769]/80">{feature.description}</p>
+      <h3 className="mt-4 text-xl font-black tracking-tight text-[#1A122E] md:text-2xl">{feature.title}</h3>
+      <p className="relative z-20 mt-3 text-sm font-light leading-relaxed text-[#524769]/80 md:text-base">{feature.description}</p>
     </div>
   );
 }

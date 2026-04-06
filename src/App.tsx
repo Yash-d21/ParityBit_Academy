@@ -25,7 +25,7 @@ function AppContent() {
   const isAuthPage = authRoutes.includes(location.pathname);
 
   return (
-    <div className="min-h-screen bg-[#FBFBF7] text-[#1A122E] font-sans selection:bg-[#7B2CBF]/20 selection:text-[#7B2CBF] overflow-x-hidden">
+    <div className="min-h-screen bg-[#FBFBF7] text-[#1A122E] font-sans selection:bg-[#7B2CBF]/20 selection:text-[#7B2CBF] overflow-x-clip">
       {!isAuthPage && <Navbar />}
       
       <div 

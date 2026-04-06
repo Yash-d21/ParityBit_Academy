@@ -229,12 +229,7 @@ export function GlobeCdn({
               <div key={n} style={pyramidFaceStyle(n)} />
             ))}
           </div>
-          <span style={{
-            fontFamily: "monospace", fontSize: "0.55rem", color: "#1A122E",
-            background: "#fff", padding: "2px 6px", borderRadius: 4,
-            letterSpacing: "0.05em", whiteSpace: "nowrap" as const,
-            boxShadow: "0 2px 4px rgba(123,44,191,0.15)", border: "1px solid rgba(123,44,191,0.2)"
-          }}>{m.region}</span>
+
         </div>
       ))}
       {traffic.map((t) => (

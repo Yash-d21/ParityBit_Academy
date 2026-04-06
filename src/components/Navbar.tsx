@@ -68,7 +68,7 @@ import { LogOut } from "lucide-react";
 export default function Navbar({
   logo = {
     url: "/",
-    src: "/Parity_logo.png",
+    src: "/Academy-removebg-preview.png",
     alt: "ParityBit Academy Logo",
     title: "",
   },

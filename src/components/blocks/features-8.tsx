@@ -28,10 +28,6 @@ const VideoLessonsCard = () => (
         <div className="relative z-10 flex size-16 items-center justify-center rounded-full bg-[#7B2CBF]/10 border border-[#7B2CBF]/20">
           <Play className="size-7 text-[#7B2CBF] fill-[#7B2CBF]" />
         </div>
-        {/* Big stat floating */}
-        <span className="absolute -right-2 -top-2 text-4xl font-black text-[#1A122E] tracking-tighter">
-          70+
-        </span>
       </div>
       <h2 className="mt-5 text-2xl font-black text-[#1A122E] tracking-tight">
         Video Lessons
@@ -40,6 +36,10 @@ const VideoLessonsCard = () => (
         Bite-sized architectural lessons covering the full offensive security spectrum.
       </p>
     </CardContent>
+    {/* Big stat floating — moved to top right of the overall card */}
+    <span className="absolute top-4 right-4 text-4xl font-black text-gradient-purple-neon tracking-tighter opacity-100 transition-opacity">
+      70+
+    </span>
   </Card>
 );
 

@@ -29,10 +29,11 @@ export default function Footer() {
             {/* Brand */}
             <div className="space-y-6">
               <div className="flex items-center gap-3">
-                <img src="/footer_logo.png" alt="Parity Bit Academy Logo" className="h-10 md:h-12 w-auto object-contain" />
-                <span className="text-white font-extrabold text-xl tracking-tighter">
-                  Parity Bit <span className="text-[#C77DFF]">Academy_</span>
-                </span>
+                <img src="/icon.png" alt="ParityBit Icon" className="h-8 md:h-10 w-auto object-contain" />
+                <div className="flex flex-col leading-none text-white font-extrabold text-xl tracking-tighter">
+                  <span className="block">ParityBit</span>
+                  <span className="block text-[#c77dff]">Academy&gt;</span>
+                </div>
               </div>
               <p className="text-[#D1D5DB] text-sm leading-relaxed font-medium">
                 Empowering the next generation of cybersecurity professionals with practical, hands-on training and real-world experience.

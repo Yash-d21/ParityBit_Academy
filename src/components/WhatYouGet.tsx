@@ -37,10 +37,11 @@ const features = [
 type AnimatedContainerProps = {
   delay?: number;
   className?: string;
+  style?: React.CSSProperties;
   children: React.ReactNode;
 };
 
-function AnimatedContainer({ className, delay = 0.1, children }: AnimatedContainerProps) {
+function AnimatedContainer({ className, delay = 0.1, children, style }: AnimatedContainerProps) {
   const shouldReduceMotion = useReducedMotion();
 
   if (shouldReduceMotion) {
@@ -54,6 +55,7 @@ function AnimatedContainer({ className, delay = 0.1, children }: AnimatedContain
       viewport={{ once: true }}
       transition={{ delay, duration: 0.8 }}
       className={className}
+      style={style}
     >
       {children}
     </motion.div>
@@ -62,8 +64,8 @@ function AnimatedContainer({ className, delay = 0.1, children }: AnimatedContain
 
 export default function WhatYouGet() {
   return (
-    <section className="py-20 md:py-32 relative overflow-hidden bg-[#FBFBF7]/60 border-y border-[#7B2CBF]/10">
-      <div className="mx-auto w-full max-w-5xl space-y-12 px-4 sm:px-6">
+    <section className="py-24 md:py-40 relative overflow-hidden bg-[#FBFBF7]/60 border-y border-[#7B2CBF]/10">
+      <div className="mx-auto w-full max-w-7xl space-y-16 px-4 sm:px-6">
 
         {/* Header */}
         <AnimatedContainer className="mx-auto max-w-3xl text-center">
