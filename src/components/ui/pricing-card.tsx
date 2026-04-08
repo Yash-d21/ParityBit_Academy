@@ -53,7 +53,7 @@ export function PricingCard({
         delayChildren: 0.1,
       },
     },
-  };
+  } as const;
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
@@ -66,7 +66,7 @@ export function PricingCard({
         damping: 20,
       },
     },
-  };
+  } as const;
 
   const listItemVariants = {
     hidden: { opacity: 0, x: -10 },
@@ -79,7 +79,7 @@ export function PricingCard({
         damping: 10,
       },
     },
-  };
+  } as const;
 
   return (
     <motion.section

@@ -181,13 +181,26 @@ const EyeBall = ({
 
 
 
+import { useAuth } from "../context/AuthContext";
+
 export default function Login() {
   const navigate = useNavigate();
+  const { user, profile, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!loading && user) {
+      if (profile?.payment_status === 'completed') {
+        navigate("/dashboard");
+      } else if (profile?.payment_status === 'pending') {
+        navigate("/payment");
+      }
+    }
+  }, [user, profile, loading, navigate]);
   const [mouseX, setMouseX] = useState<number>(0);
   const [mouseY, setMouseY] = useState<number>(0);
   const [isPurpleBlinking, setIsPurpleBlinking] = useState(false);
@@ -346,9 +359,9 @@ export default function Login() {
         <div className="relative z-20">
           <Link to="/" className="flex items-center gap-3 text-lg font-semibold hover:opacity-80 transition-opacity">
             <img src="/icon.png" className="h-10 md:h-12 w-auto object-contain" alt="Logo" />
-            <div className="flex flex-col leading-none text-white font-black text-xl tracking-tighter">
+            <div className="flex flex-col leading-none text-white font-black text-xl tracking-tighter uppercase">
               <span>ParityBit</span>
-              <span className="text-[#c77dff]">Academy&gt;</span>
+              <span className="text-[#c77dff] opacity-80 text-[15px] tracking-[0.2em] mt-0.5">Academy_</span>
             </div>
           </Link>
         </div>
@@ -550,9 +563,9 @@ export default function Login() {
           <div className="lg:hidden flex items-center justify-center gap-2 text-lg font-semibold mb-12">
             <Link to="/" className="flex items-center gap-3">
               <img src="/icon.png" className="h-10 w-auto object-contain" alt="Logo" />
-              <div className="flex flex-col leading-none text-[#1A122E] font-black text-xl tracking-tighter">
+              <div className="flex flex-col leading-none text-[#1A122E] font-black text-xl tracking-tighter uppercase">
                 <span>ParityBit</span>
-                <span className="text-[#c77dff]">Academy&gt;</span>
+                <span className="text-[#641c8c] text-[15px] tracking-[0.2em] mt-0.5">Academy_</span>
               </div>
             </Link>
           </div>

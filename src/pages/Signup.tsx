@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Mail, Sparkles, User, UserPlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link, useNavigate } from "react-router-dom";
-import { supabase } from "@/utils/supabase";
+import { supabase } from "../utils/supabase";
 import { Loader2 } from "lucide-react";
 
 
@@ -179,14 +179,27 @@ const EyeBall = ({
 
 
 
+import { useAuth } from "../context/AuthContext";
+
 export default function Signup() {
   const navigate = useNavigate();
+  const { user, profile, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!loading && user) {
+      if (profile?.payment_status === 'completed') {
+        navigate("/dashboard");
+      } else if (profile?.payment_status === 'pending') {
+        navigate("/payment");
+      }
+    }
+  }, [user, profile, loading, navigate]);
   const [mouseX, setMouseX] = useState<number>(0);
   const [mouseY, setMouseY] = useState<number>(0);
   const [isPurpleBlinking, setIsPurpleBlinking] = useState(false);
@@ -291,9 +304,16 @@ export default function Signup() {
       setError("Please fill in all fields.");
       return;
     }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
     
+    console.log("[Signup] Starting submission for:", email);
     setIsLoading(true);
     try {
+      console.log("[Signup] Calling Supabase auth.signUp...");
       const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
@@ -304,12 +324,15 @@ export default function Signup() {
         },
       });
 
+      console.log("[Signup] Supabase response received:", { user: data.user?.id, error: signUpError?.message });
+
       if (signUpError) {
         setError(signUpError.message);
         return;
       }
 
       if (data.user) {
+        console.log("[Signup] Creating profile in database...");
         // Create a profile for the user
         const { error: profileError } = await supabase
           .from('profiles')
@@ -323,10 +346,12 @@ export default function Signup() {
           ]);
 
         if (profileError) {
-          console.error("Profile creation error:", profileError);
-          // We still navigate to payment as account exists
+          console.error("[Signup] Profile creation error:", profileError);
+        } else {
+          console.log("[Signup] Profile created successfully.");
         }
 
+        console.log("[Signup] Navigating to /payment...");
         navigate("/payment");
       }
     } catch (err) {
@@ -344,9 +369,9 @@ export default function Signup() {
         <div className="relative z-20">
           <Link to="/" className="flex items-center gap-3 text-lg font-semibold hover:opacity-80 transition-opacity">
             <img src="/icon.png" className="h-10 md:h-12 w-auto object-contain" alt="Logo" />
-            <div className="flex flex-col leading-none text-white font-black text-xl tracking-tighter">
+            <div className="flex flex-col leading-none text-white font-black text-xl tracking-tighter uppercase">
               <span>ParityBit</span>
-              <span className="text-[#c77dff]">Academy&gt;</span>
+              <span className="text-[#c77dff] opacity-80 text-[15px] tracking-[0.2em] mt-0.5">Academy_</span>
             </div>
           </Link>
         </div>
@@ -523,9 +548,9 @@ export default function Signup() {
           <div className="lg:hidden flex items-center justify-center gap-2 text-lg font-semibold mb-12">
             <Link to="/" className="flex items-center gap-3">
               <img src="/icon.png" className="h-10 w-auto object-contain" alt="Logo" />
-              <div className="flex flex-col leading-none text-[#1A122E] font-black text-xl tracking-tighter">
+              <div className="flex flex-col leading-none text-[#1A122E] font-black text-xl tracking-tighter uppercase">
                 <span>ParityBit</span>
-                <span className="text-[#c77dff]">Academy&gt;</span>
+                <span className="text-[#641c8c] text-[15px] tracking-[0.2em] mt-0.5">Academy_</span>
               </div>
             </Link>
           </div>

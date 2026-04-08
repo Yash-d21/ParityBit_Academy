@@ -16,6 +16,8 @@ export default function Payment() {
   const navigate = useNavigate();
   const { user, profile, loading, refreshProfile } = useAuth();
   const [status, setStatus] = useState<"idle" | "processing" | "success">("idle");
+  const [loadingStep, setLoadingStep] = useState("");
+  const [isInitiating, setIsInitiating] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   // Protect the page
@@ -44,66 +46,124 @@ export default function Payment() {
       return;
     }
 
-    const options = {
-      key: razorpayKey,
-      amount: 118000, // ₹1,180 in paise
-      currency: "INR",
-      name: "ParityBit Academy",
-      description: "Zero to Hero Masterclass Enrollment",
-      image: "/footer_logo.png",
-      handler: async function (response: any) {
-        console.log("Razorpay payment successful:", response.razorpay_payment_id);
-        setStatus("processing");
-        
-        try {
-          console.log("Updating enrollment in database...");
-          const { error } = await supabase
-            .from('profiles')
-            .upsert({ 
-              id: user.id, 
-              payment_status: 'completed',
-              email: user.email,
-              full_name: profile?.full_name || user.user_metadata?.full_name || ""
+    try {
+      setIsInitiating(true);
+      
+      const host = window.location.hostname === 'localhost' ? '127.0.0.1' : window.location.hostname;
+      const API_URL = `${window.location.protocol}//${host}:5000`;
+      console.log("Calling Backend API at:", API_URL);
+      
+      const response = await fetch(`${API_URL}/api/create-order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: 118000, 
+          currency: "INR",
+          userId: user.id
+        })
+      });
+
+      if (!response.ok) throw new Error("Failed to create payment order");
+      const order = await response.json();
+
+      const options = {
+        key: razorpayKey,
+        amount: order.amount,
+        currency: order.currency,
+        name: "ParityBit Academy",
+        description: "Zero to Hero Masterclass Enrollment",
+        image: `${window.location.protocol}//${window.location.host}/icon.png`,
+        order_id: order.id,
+        handler: async function (response: any) {
+          console.log("[Payment] Razorpay handler invoked", response);
+          setStatus("processing");
+          setLoadingStep("Verifying Signature...");
+          
+          try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+
+            console.log("[Payment] Contacting backend verification API...");
+            const verifyResponse = await fetch(`${API_URL}/api/verify-payment`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                userId: user.id
+              }),
+              signal: controller.signal
             });
+            clearTimeout(timeoutId);
 
-          if (error) {
-            console.error("Supabase update error:", error);
-            setErrorMessage(`Enrollment Update Failed: ${error.message}`);
-            setStatus("idle");
-          } else {
-            await refreshProfile();
+            console.log("[Payment] Verification API response received:", verifyResponse.status);
+            
+            const verifyData = await verifyResponse.json().catch(() => null);
+            console.log("[Payment] Verification API Data:", verifyData);
+
+            if (!verifyResponse.ok) {
+               throw new Error(verifyData?.message || "Payment verification failed");
+            }
+
+            setLoadingStep("Updating Enrollment...");
+            console.log("[Payment] Updating DB Profile...");
+            // Update database on the frontend since backend doesn't have service role key
+            const { error: updateError } = await supabase
+              .from('profiles')
+              .update({ payment_status: 'completed' })
+              .eq('id', user.id);
+
+            if (updateError) {
+              console.error("[Payment] Supabase update error:", updateError);
+              throw updateError;
+            }
+
+            setLoadingStep("Finalizing...");
+            console.log("[Payment] Operation fully successful. Refreshing profile.");
             setStatus("success");
-            setTimeout(() => {
-              navigate("/dashboard");
-            }, 800);
-          }
-        } catch (err: any) {
-          console.error("Post-payment sync error:", err);
-          setErrorMessage("Failed to sync enrollment. Please contact support.");
-          setStatus("idle");
-        }
-      },
-      prefill: {
-        name: profile?.full_name || "",
-        email: user.email || "",
-      },
-      theme: {
-        color: "#7B2CBF",
-      },
-      modal: {
-        ondismiss: function() {
-          setStatus("idle");
-        }
-      }
-    };
+            await refreshProfile();
+            console.log("[Payment] Navigating to dashboard.");
+            setTimeout(() => navigate("/dashboard"), 1500);
 
-    const rzp = new window.Razorpay(options);
-    rzp.on('payment.failed', function (response: any) {
-      console.error("Razorpay payment failed:", response.error);
-      setErrorMessage(`Payment Failed: ${response.error.description}`);
-    });
-    
-    rzp.open();
+          } catch (err: any) {
+            console.error("[Payment] Handled Error:", err);
+            const msg = err.name === 'AbortError' ? 'Verification timed out. Check connection.' : (err.message || "Please contact support");
+            setErrorMessage(`Verification Error: ${msg}`);
+            setIsInitiating(false);
+            setStatus("idle");
+          }
+        },
+        prefill: {
+          name: profile?.full_name || "",
+          email: user.email || "",
+        },
+        theme: {
+          color: "#7B2CBF",
+        },
+        modal: {
+          ondismiss: function() {
+            setIsInitiating(false);
+            setStatus("idle");
+          }
+        }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.on('payment.failed', function (response: any) {
+        setErrorMessage(`Payment Failed: ${response.error.description}`);
+        setIsInitiating(false);
+        setStatus("idle");
+      });
+      rzp.open();
+      // Keep isInitiating=true until modal is closed or payment is successful to prevent double clicks
+
+
+    } catch (err: any) {
+      setErrorMessage(`Error: ${err.message || "Could not initialize payment"}`);
+      setIsInitiating(false);
+      setStatus("idle");
+    }
   };
 
   return (
@@ -119,8 +179,11 @@ export default function Payment() {
         className="mb-8 relative z-20"
       >
         <Link to="/" className="flex items-center gap-3">
-          <img src="/footer_logo.png" className="h-12 w-auto object-contain hover:scale-105 transition-transform duration-300" alt="Logo" />
-          <span className="tracking-tighter font-black text-xl text-[#1A122E] uppercase">ParityBit Academy_</span>
+          <img src="/icon.png" className="h-12 w-auto object-contain hover:scale-105 transition-transform duration-300" alt="Logo" />
+          <div className="flex flex-col leading-none tracking-tighter font-black text-xl uppercase">
+            <span className="text-[#1A122E]">ParityBit</span>
+            <span className="text-[#641c8c] text-[15px] tracking-[0.2em] mt-0.5">Academy_</span>
+          </div>
         </Link>
       </motion.div>
 
@@ -271,10 +334,20 @@ export default function Payment() {
                   
                   <Button 
                     onClick={handlePayment}
-                    className="w-full h-16 bg-[#1A122E] hover:bg-[#7B2CBF] text-white rounded-[24px] font-black tracking-widest uppercase transition-all shadow-2xl shadow-[#1A122E]/10 group flex items-center justify-center gap-4 text-sm"
+                    disabled={isInitiating}
+                    className="w-full h-16 bg-[#1A122E] hover:bg-[#7B2CBF] text-white rounded-[24px] font-black tracking-widest uppercase transition-all shadow-2xl shadow-[#1A122E]/10 group flex items-center justify-center gap-4 text-sm disabled:opacity-50"
                   >
-                    Complete Payment & Start Learning
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+                    {isInitiating ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Initializing Payment...
+                      </>
+                    ) : (
+                      <>
+                        Complete Payment & Start Learning
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+                      </>
+                    )}
                   </Button>
                   
                   <p className="text-[10px] text-center font-bold text-slate-400 max-w-sm mx-auto leading-relaxed">
@@ -296,8 +369,8 @@ export default function Payment() {
                    </div>
                 </div>
                 <div className="text-center">
-                  <h3 className="text-xl font-black text-[#1A122E] uppercase tracking-widest italic animate-pulse">Contacting Secure Gateway_</h3>
-                  <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em] mt-2">Connecting to Razorpay Servers...</p>
+                  <h3 className="text-xl font-black text-[#1A122E] uppercase tracking-widest italic animate-pulse">{loadingStep || "Verifying Payment_"}</h3>
+                  <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em] mt-2">Connecting to secure servers...</p>
                 </div>
               </motion.div>
             ) : (

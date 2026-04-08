@@ -8,27 +8,55 @@ import { FloatingPaths } from './ui/background-paths';
 const PromotionalPopup: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    // Show after 5 seconds of opening the site
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 5000); 
+  const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
 
-    // Scroll listener for bottom scroll
+  useEffect(() => {
+    // 1. Show after 5 seconds initially (once)
+    const initialTimer = setTimeout(() => {
+      setIsVisible(true);
+    }, 5000);
+
+    // 2. Show every 20 seconds (recurring)
+    // This will ensure the popup keeps appearing to drive conversion
+    const recurringInterval = setInterval(() => {
+      setIsVisible((prev) => {
+        if (!prev) return true;
+        return prev;
+      });
+    }, 20000);
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(recurringInterval);
+    };
+  }, []);
+
+  useEffect(() => {
+    // 3. Scroll listener for bottom scroll (once per session)
     const handleScroll = () => {
+      if (hasScrolledToBottom) return;
+
       const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-      if (scrollTop + clientHeight >= scrollHeight - 300 && !isVisible) {
+      // Trigger when user is near the very bottom
+      if (scrollTop + clientHeight >= scrollHeight - 100) {
         setIsVisible(true);
+        setHasScrolledToBottom(true);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('scroll', handleScroll);
+    // 4. Keyboard listener for Escape key
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closePopup();
     };
-  }, []);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('keydown', handleEsc);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [hasScrolledToBottom]);
 
   const closePopup = () => setIsVisible(false);
 
@@ -68,7 +96,7 @@ const PromotionalPopup: React.FC = () => {
                </button>
 
                <div className="mb-6 h-12 flex items-center justify-center">
-                  <img src="/Academy.png" alt="ParityBit Academy" className="h-full w-auto object-contain transition-transform hover:scale-105 duration-500" />
+                  <img src="/icon.png" alt="ParityBit Academy" className="h-full w-auto object-contain transition-transform hover:scale-105 duration-500" />
                </div>
 
                <div className="flex flex-col items-center">

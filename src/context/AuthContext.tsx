@@ -24,18 +24,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("[AuthContext] Supabase Connection Check:", import.meta.env.VITE_SUPABASE_URL || "URL MISSING");
+    
+    // Safety Timeout: 3 seconds (Fast UX)
+    const safetyTimeout = setTimeout(() => {
+      console.warn("[AuthContext] Initialization taking too long. Check your Supabase URL/API Keys in .env");
+      setLoading(false);
+    }, 3000);
+
     // Check active sessions and sets the user
     supabase.auth.getSession().then(({ data: { session } }) => {
+      clearTimeout(safetyTimeout);
+      console.log("[AuthContext] Initial session retrieved:", session?.user?.id || "None");
       setUser(session?.user ?? null);
       if (session?.user) {
         fetchProfile(session.user.id);
       } else {
         setLoading(false);
       }
+    }).catch(err => {
+      clearTimeout(safetyTimeout);
+      console.error("[AuthContext] Failed to get session:", err.message);
+      setLoading(false);
     });
 
     // Listen for changes on auth state
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("[AuthContext] Auth state changed:", event);
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       
@@ -47,10 +62,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      clearTimeout(safetyTimeout);
+      subscription.unsubscribe();
+    };
   }, []);
 
   async function fetchProfile(userId: string) {
+    console.log("[AuthContext] Fetching profile for:", userId);
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -59,10 +78,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .single();
 
       if (error) {
-        // If profile doesn't exist, we might want to create it
-        // but for now we just handle it
-        console.error('Error fetching profile:', error);
+        console.error('[AuthContext] Error fetching profile:', error);
+        if (error.code === 'PGRST106' || error.message?.includes('406')) {
+           console.warn("[AuthContext] Possible Schema Mismatch (406). Check profiles table.");
+        }
       } else {
+        console.log("[AuthContext] Profile fetched success:", data?.payment_status);
         setProfile(data);
       }
     } finally {
@@ -71,7 +92,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    console.log("[AuthContext] Logging out...");
+    try {
+      await supabase.auth.signOut();
+      // Clear persistence just in case
+      localStorage.removeItem('supabase.auth.token');
+    } catch (err) {
+      console.error("[AuthContext] Error during sign out:", err);
+    } finally {
+      setUser(null);
+      setProfile(null);
+      console.log("[AuthContext] Session cleared locally.");
+    }
   };
 
   const refreshProfile = async () => {

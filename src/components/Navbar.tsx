@@ -1,5 +1,5 @@
 import { Menu } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   Accordion,
@@ -93,6 +93,7 @@ export default function Navbar({
   ],
 }: Navbar1Props) {
   const { user, profile, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const getInitials = (name: string | null | undefined) => {
     if (!name) return user?.email?.[0].toUpperCase() || "U";
@@ -144,7 +145,10 @@ export default function Navbar({
                     </div>
                     <div className="p-2">
                        <button 
-                        onClick={() => signOut()}
+                        onClick={async () => {
+                          await signOut();
+                          navigate('/');
+                        }}
                         className="w-full flex items-center gap-3 p-3 rounded-xl text-xs font-bold text-slate-500 hover:text-red-500 hover:bg-red-50 transition-all text-left"
                        >
                          <LogOut className="w-4 h-4" />
@@ -213,15 +217,27 @@ export default function Navbar({
                   </div>
                   <div className="flex flex-col gap-3 mt-4">
                     {user ? (
-                      <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-xl">
-                        <div className="size-12 rounded-full bg-[#7B2CBF] flex items-center justify-center text-white font-black text-sm tracking-widest shadow-lg shadow-[#7B2CBF]/20">
-                          {getInitials(profile?.full_name)}
+                      <>
+                        <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-xl">
+                          <div className="size-12 rounded-full bg-[#7B2CBF] flex items-center justify-center text-white font-black text-sm tracking-widest shadow-lg shadow-[#7B2CBF]/20">
+                            {getInitials(profile?.full_name)}
+                          </div>
+                          <div className="flex flex-col flex-1">
+                            <span className="text-[10px] font-black tracking-[0.2em] text-[#7B2CBF] uppercase">Welcome Back_</span>
+                            <span className="font-bold text-slate-900 truncate max-w-[150px]">{profile?.full_name || user.email?.split('@')[0]}</span>
+                          </div>
+                          <button 
+                            onClick={async () => {
+                              await signOut();
+                              navigate('/');
+                            }}
+                            className="size-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-100 transition-colors"
+                            title="Sign Out"
+                          >
+                            <LogOut className="w-5 h-5" />
+                          </button>
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-[10px] font-black tracking-[0.2em] text-[#7B2CBF] uppercase">Welcome Back_</span>
-                          <span className="font-bold text-slate-900">{profile?.full_name || user.email?.split('@')[0]}</span>
-                        </div>
-                      </div>
+                      </>
                     ) : (
                       <Button asChild variant="outline" className="w-full border-slate-200 text-slate-800 font-bold hover:bg-slate-50">
                         <Link to="/login">Login</Link>

@@ -1,11 +1,40 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { LogOut, LayoutDashboard, Database, BookOpen, User } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAuth } from "../context/AuthContext";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const { user, profile, loading, signOut } = useAuth();
+
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        navigate("/login");
+      } else if (profile?.payment_status !== 'completed') {
+        navigate("/payment");
+      }
+    }
+  }, [user, profile, loading, navigate]);
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      navigate("/");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#FBFBF7] flex items-center justify-center">
+        <div className="size-12 rounded-full border-4 border-[#7B2CBF]/20 border-t-[#7B2CBF] animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#FBFBF7] flex">
@@ -27,7 +56,7 @@ export default function Dashboard() {
 
         <Button 
             variant="ghost" 
-            onClick={() => navigate("/login")}
+            onClick={handleLogout}
             className="text-white/40 hover:text-white mt-auto p-0 hover:bg-transparent"
         >
             <LogOut className="w-5 h-5 lg:mr-3" />
