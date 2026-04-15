@@ -154,14 +154,14 @@ export function PricingCard({
                         variants={listItemVariants}
                         custom={index + featureIndex * feature.items.length}
                       >
-                        {item.includes("Certification") ? (
+                        { (item.includes("Certification") || item.includes("Lifetime Validity")) ? (
                           <Star className="mr-3 h-4 w-4 text-[#7B2CBF] shrink-0 mt-0.5 fill-[#7B2CBF]" strokeWidth={2} />
                         ) : (
                           <Check className="mr-3 h-4 w-4 text-[#7B2CBF] shrink-0 mt-0.5" strokeWidth={3} />
                         )}
                         <span className={cn(
                           "text-sm font-medium leading-snug",
-                          item.includes("Certification") ? "text-[#7B2CBF] font-black" : "text-[#524769]"
+                          (item.includes("Certification") || item.includes("Lifetime Validity")) ? "text-[#7B2CBF] font-black" : "text-[#524769]"
                         )}>{item}</span>
                       </motion.li>
                     ))}

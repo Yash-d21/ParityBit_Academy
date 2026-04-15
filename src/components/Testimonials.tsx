@@ -19,7 +19,7 @@ const testimonials = [
     role: 'Security Engineer',
     company: 'Deloitte',
     img: 'https://picsum.photos/seed/amit/100/100',
-    body: 'I was stuck in IT support for 3 years. This masterclass gave me the exact roadmap to transition into cybersecurity. The eCCSP certification genuinely moved my resume to the top.',
+    body: 'I was stuck in IT support for 3 years. This masterclass gave me the exact roadmap to transition into cybersecurity. The pCCSP certification genuinely moved my resume to the top.',
     rating: 5,
   },
   {

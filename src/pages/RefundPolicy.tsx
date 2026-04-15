@@ -29,7 +29,7 @@ export default function RefundPolicy() {
             <section>
               <h2 className="text-2xl font-black text-[#1A122E] mb-4 uppercase tracking-tighter">2. Refund Eligibility</h2>
               <p>
-                After the initial 7-day period has elapsed, refunds will only be considered on a case-by-case basis under extraordinary circumstances. Once the eCCSP - Certified Cyber Security Practitioner has been issued, no refunds will be provided.
+                After the initial 7-day period has elapsed, refunds will only be considered on a case-by-case basis under extraordinary circumstances. Once the pCCSP - Certified Cyber Security Practitioner has been issued, no refunds will be provided.
               </p>
             </section>
 

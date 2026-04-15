@@ -13,7 +13,7 @@ export default function Footer() {
   const programLinks = [
     { label: 'Zero to Hero Masterclass', href: '/#curriculum' },
     { label: 'Applied Internship', href: '/#pricing' },
-    { label: 'eCCSP Certification', href: '/#pricing' },
+    { label: 'pCCSP Certification', href: '/#pricing' },
   ];
 
   return (

@@ -93,7 +93,7 @@ export default function Pricing() {
                     "Hands-on Labs & Vulnerable Virtual Machines",
                     "Live Weekly Q&A Sessions with Instructor",
                     "2-Month Applied Internship (Guaranteed)",
-                    "eCCSP - Certified Cyber Security Practitioner (Lifetime* Validity)",
+                    "pCCSP - Certified Cyber Security Practitioner (Lifetime Validity)",
                     "Resume & Interview Preparation",
                     "Lifetime* Access + Free Course Updates",
                     "Private Discord Community Access",

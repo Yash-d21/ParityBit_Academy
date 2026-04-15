@@ -36,7 +36,7 @@ export default function TermsOfService() {
             <section>
               <h2 className="text-2xl font-black text-[#1A122E] mb-4 uppercase tracking-tighter">3. Certification</h2>
               <p>
-                The eCCSP - Certified Cyber Security Practitioner is awarded upon the successful completion of all training modules and the final capstone project. ParityBit Security reserves the right to withhold certification if academic integrity is compromised.
+                The pCCSP - Certified Cyber Security Practitioner is awarded upon the successful completion of all training modules and the final capstone project. ParityBit Security reserves the right to withhold certification if academic integrity is compromised.
               </p>
             </section>
 

@@ -30,7 +30,7 @@ const faqs: FaqItem[] = [
     id: "05",
     title: "Is the certification recognized?",
     content:
-      "Yes. The eCCSP - Certified Cyber Security Practitioner is recognized by our hiring partners and demonstrates rigorous hands-on training, a practical internship, and real-world project experience — making you genuinely job-ready.",
+      "Yes. The pCCSP - Certified Cyber Security Practitioner is recognized by our hiring partners and demonstrates rigorous hands-on training, a practical internship, and real-world project experience — making you genuinely job-ready.",
   },
   {
     id: "06",
