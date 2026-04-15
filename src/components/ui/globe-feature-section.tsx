@@ -24,11 +24,11 @@ export default function Featured_05() {
           </h2>
           
           <p className="text-[#524769] text-lg font-medium mb-12 max-w-lg leading-relaxed">
-            The 2026 Zero to Hero Masterclass is officially open. Join the next cohort of global defensive and offensive cyber elites.
+            The 2026 Zero to Hero Complete Security Bundle is officially open. Join the next cohort of global defensive and offensive cyber elites.
           </p>
 
           <Button className="mt-6 flex items-center gap-3 rounded-full bg-[#011F5B] hover:bg-[#011F5B]/90 px-8 py-7 text-base font-bold text-white transition-all hover:scale-105 shadow-xl shadow-[#011F5B]/20">
-            Join the Masterclass <ArrowRight className="h-5 w-5" />
+            Join the Complete Security Bundle <ArrowRight className="h-5 w-5" />
           </Button>
         </div>
         

@@ -79,7 +79,7 @@ export default function Pricing() {
           >
             <PricingCard
               className="rounded-[24px]"
-              title="Cybersecurity Masterclass"
+              title="Complete Security Bundle"
               description="Complete access from zero to advanced."
               price={999}
               originalPrice={4999}

@@ -26,7 +26,7 @@ export default function Curriculum() {
 
         {/* Simplified Header */}
         <div className="text-center mb-16">
-          <p className="text-[#BC6C25] text-xs font-bold uppercase tracking-[0.2em] mb-4">Masterclass Syllabus</p>
+          <p className="text-[#BC6C25] text-xs font-bold uppercase tracking-[0.2em] mb-4">Complete Security Bundle Syllabus</p>
           <h2 className="text-4xl md:text-5xl font-black text-[#1A122E] mb-6 tracking-tight">
             Comprehensive <span className="text-rich-navy">Learning Journal</span>
           </h2>

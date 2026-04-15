@@ -11,7 +11,7 @@ export default function Footer() {
   ];
 
   const programLinks = [
-    { label: 'Zero to Hero Masterclass', href: '/#curriculum' },
+    { label: 'Zero to Hero Complete Security Bundle', href: '/#curriculum' },
     { label: 'Applied Internship', href: '/#pricing' },
     { label: 'pCCSP Certification', href: '/#pricing' },
   ];

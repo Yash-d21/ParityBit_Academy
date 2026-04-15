@@ -22,7 +22,7 @@ export default function TermsOfService() {
             <section>
               <h2 className="text-2xl font-black text-[#1A122E] mb-4 uppercase tracking-tighter">1. Acceptance of Terms</h2>
               <p>
-                By enrolling in ParityBit Academy’s "Zero to Hero" masterclass, you agree to comply with and be bound by these Terms of Service. If you disagree with any part of the terms, you may not access our educational services.
+                By enrolling in ParityBit Academy’s "Zero to Hero" complete security bundle, you agree to comply with and be bound by these Terms of Service. If you disagree with any part of the terms, you may not access our educational services.
               </p>
             </section>
 
@@ -43,7 +43,7 @@ export default function TermsOfService() {
             <section>
               <h2 className="text-2xl font-black text-[#1A122E] mb-4 uppercase tracking-tighter">4. Modification to Services</h2>
               <p>
-                ParityBit Academy reserves the right to modify or discontinue any part of the masterclass without notice at any time. We are not liable for any changes to course content or lab availability.
+                ParityBit Academy reserves the right to modify or discontinue any part of the complete security bundle without notice at any time. We are not liable for any changes to course content or lab availability.
               </p>
             </section>
           </div>

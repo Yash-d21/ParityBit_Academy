@@ -631,7 +631,7 @@ export default function Signup() {
                   <Loader2 className="h-4 w-4 animate-spin" />
                   Creating Account...
                 </div>
-              ) : "Start Your Masterclass"}
+              ) : "Start Your Complete Security Bundle"}
             </Button>
           </form>
 

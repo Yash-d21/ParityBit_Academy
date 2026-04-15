@@ -71,7 +71,7 @@ export default function Payment() {
         amount: order.amount,
         currency: order.currency,
         name: "ParityBit Academy",
-        description: "Zero to Hero Masterclass Enrollment",
+        description: "Zero to Hero Enrollment",
         image: `${window.location.protocol}//${window.location.host}/icon.png`,
         order_id: order.id,
         handler: async function (response: any) {
@@ -202,7 +202,7 @@ export default function Payment() {
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-6">
                <div className="w-8 h-1 bg-[#7B2CBF] rounded-full" />
-               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C77DFF]">Zero to Hero Masterclass</span>
+               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C77DFF]">Zero to Hero Complete Security Bundle</span>
             </div>
             
             <h2 className="text-3xl font-black tracking-tight mb-3 leading-tight">Secure Your Spot_</h2>
@@ -269,7 +269,7 @@ export default function Payment() {
                    
                    <div>
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="px-2 py-0.5 rounded-md bg-[#7B2CBF] text-[10px] font-black text-white uppercase tracking-widest">Masterclass Plan</span>
+                        <span className="px-2 py-0.5 rounded-md bg-[#7B2CBF] text-[10px] font-black text-white uppercase tracking-widest">Security Bundle Plan</span>
                         <span className="text-[10px] font-bold text-[#7B2CBF] uppercase tracking-widest">Limited Offer</span>
                       </div>
                       <h4 className="text-xl font-black text-[#1A122E] uppercase tracking-tight">Full Stack Cybersecurity Bootcamp</h4>

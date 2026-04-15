@@ -42,7 +42,7 @@ export default function FinalCTA() {
             </h2>
             
             <p className="text-[#E0E0E0] text-xl font-medium leading-relaxed mb-10 max-w-xl">
-              The 2026 <strong className="text-white font-black">Zero to Hero Masterclass</strong> is officially open. Join the next cohort of global defensive and offensive cyber elites.
+              The 2026 <strong className="text-white font-black">Zero to Hero Complete Security Bundle</strong> is officially open. Join the next cohort of global defensive and offensive cyber elites.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">

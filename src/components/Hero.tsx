@@ -60,7 +60,7 @@ export default function Hero() {
               backdropFilter: 'blur(10px)',
             }}>
             <span className="w-1.5 h-1.5 rounded-full bg-[#9D4EDD] animate-glow-pulse" />
-            Introducing Zero to Hero Masterclass 2026
+            Introducing Zero to Hero Complete Security Bundle 2026
             <ChevronRight className="w-3.5 h-3.5 text-[#7B2CBF] group-hover:translate-x-0.5 transition-transform" />
           </a>
         </motion.div>
