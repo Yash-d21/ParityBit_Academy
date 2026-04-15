@@ -213,7 +213,7 @@ export default function Payment() {
                 { title: "70+ HD Video Lessons", desc: "Hindi + English Dual Audio" },
                 { title: "Hands-on Labs", desc: "Access to Vulnerable Machines" },
                 { title: "2-Month Internship", desc: "Guaranteed Applied Internship" },
-                { title: "Official Certification", desc: "Lifetime* - Never Expires", highlight: true },
+                { title: "eCCSP Certification", desc: "Lifetime* - Never Expires", highlight: true },
               ].map((item, i) => (
                 <motion.div 
                   key={i} 

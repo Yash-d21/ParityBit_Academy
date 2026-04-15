@@ -28,9 +28,9 @@ const features = [
   {
     icon: Award,
     tag: 'Certified',
-    title: 'CyberMasteryX Certification',
+    title: 'eCCSP - Certified Cyber Security Practitioner',
     description:
-      'Earn the industry-recognized CyberMasteryX Certification to validate your skills. This certificate will never expire.',
+      'Earn the industry-recognized eCCSP - Certified Cyber Security Practitioner to validate your skills. This certificate will never expire.',
   },
 ];
 
