@@ -57,7 +57,7 @@ export default function Payment() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: 118000, 
+          amount: 99900, 
           currency: "INR",
           userId: user.id
         })
@@ -276,7 +276,7 @@ export default function Payment() {
                    </div>
 
                    <div className="flex items-baseline gap-3">
-                      <span className="text-3xl font-black text-[#1A122E]">₹1,000</span>
+                      <span className="text-3xl font-black text-[#1A122E]">₹999</span>
                       <span className="text-lg font-bold text-slate-300 line-through">₹5,000</span>
                       <span className="text-xs font-black text-emerald-500 uppercase tracking-widest">80% OFF</span>
                    </div>
@@ -309,15 +309,15 @@ export default function Payment() {
                 <div className="space-y-3 px-2 lg:px-4">
                    <div className="flex justify-between text-xs font-black uppercase tracking-widest text-slate-400">
                       <span>Enrollment Fee</span>
-                      <span className="text-slate-600 font-black">₹1,000</span>
+                      <span className="text-slate-600 font-black">₹847</span>
                    </div>
                    <div className="flex justify-between text-xs font-black uppercase tracking-widest text-slate-400">
                       <span>GST (18%)</span>
-                      <span className="text-slate-600 font-black">₹180</span>
+                      <span className="text-slate-600 font-black">₹152</span>
                    </div>
                    <div className="pt-4 mt-2 border-t-2 border-slate-50 border-dashed flex justify-between items-center text-2xl font-black text-[#1A122E]">
                       <span className="text-[10px] uppercase tracking-[0.3em] text-slate-300">Final Total</span>
-                      <span className="text-[#7B2CBF]">₹1,180</span>
+                      <span className="text-[#7B2CBF]">₹999</span>
                    </div>
                 </div>
 
