@@ -307,15 +307,7 @@ export default function Payment() {
 
                 {/* Final Breakdown */}
                 <div className="space-y-3 px-2 lg:px-4">
-                   <div className="flex justify-between text-xs font-black uppercase tracking-widest text-slate-400">
-                      <span>Enrollment Fee</span>
-                      <span className="text-slate-600 font-black">₹847</span>
-                   </div>
-                   <div className="flex justify-between text-xs font-black uppercase tracking-widest text-slate-400">
-                      <span>GST (18%)</span>
-                      <span className="text-slate-600 font-black">₹152</span>
-                   </div>
-                   <div className="pt-4 mt-2 border-t-2 border-slate-50 border-dashed flex justify-between items-center text-2xl font-black text-[#1A122E]">
+                   <div className="flex justify-between items-center text-2xl font-black text-[#1A122E]">
                       <span className="text-[10px] uppercase tracking-[0.3em] text-slate-300">Final Total</span>
                       <span className="text-[#7B2CBF]">₹999</span>
                    </div>
