@@ -4,7 +4,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/ca
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, Star } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
@@ -154,8 +154,15 @@ export function PricingCard({
                         variants={listItemVariants}
                         custom={index + featureIndex * feature.items.length}
                       >
-                        <Check className="mr-3 h-4 w-4 text-[#7B2CBF] shrink-0 mt-0.5" strokeWidth={3} />
-                        <span className="text-sm font-medium text-[#524769] leading-snug">{item}</span>
+                        {item.includes("Certification") ? (
+                          <Star className="mr-3 h-4 w-4 text-[#7B2CBF] shrink-0 mt-0.5 fill-[#7B2CBF]" strokeWidth={2} />
+                        ) : (
+                          <Check className="mr-3 h-4 w-4 text-[#7B2CBF] shrink-0 mt-0.5" strokeWidth={3} />
+                        )}
+                        <span className={cn(
+                          "text-sm font-medium leading-snug",
+                          item.includes("Certification") ? "text-[#7B2CBF] font-black" : "text-[#524769]"
+                        )}>{item}</span>
                       </motion.li>
                     ))}
                   </ul>

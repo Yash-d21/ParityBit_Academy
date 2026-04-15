@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShieldCheck, ArrowRight, Loader2, Lock, CheckCircle2, ChevronRight, CreditCard, Wallet, Landmark, Timer, Sparkles } from "lucide-react";
+import { ShieldCheck, ArrowRight, Loader2, Lock, CheckCircle2, ChevronRight, CreditCard, Wallet, Landmark, Timer, Sparkles, Star } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { supabase } from "../utils/supabase";
@@ -208,29 +208,26 @@ export default function Payment() {
             <h2 className="text-3xl font-black tracking-tight mb-3 leading-tight">Secure Your Spot_</h2>
             <p className="text-white/50 text-sm font-medium mb-8">Join the next cohort of global defensive and offensive cyber elites.</p>
 
-            <div className="space-y-4 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-4">
               {[
                 { title: "70+ HD Video Lessons", desc: "Hindi + English Dual Audio" },
                 { title: "Hands-on Labs", desc: "Access to Vulnerable Machines" },
                 { title: "2-Month Internship", desc: "Guaranteed Applied Internship" },
-                { title: "Weekly Q&A Sessions", desc: "Direct Instructor Contact" },
-                { title: "Official Certification", desc: "Industry-Recognized CyberMasteryX" },
-                { title: "Resume & Interview Prep", desc: "Career Placement Assistance" },
-                { title: "Lifetime Updates", desc: "Always Stay Current" },
+                { title: "Official Certification", desc: "Lifetime* - Never Expires", highlight: true },
               ].map((item, i) => (
                 <motion.div 
                   key={i} 
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.08 }}
-                  className="flex items-start gap-4 p-3 rounded-2xl bg-white/[0.03] border border-white/5"
+                  className={`flex items-start gap-4 p-3 rounded-2xl transition-all duration-300 border ${item.highlight ? 'bg-[#7B2CBF]/15 border-[#7B2CBF]/40 shadow-lg shadow-[#7B2CBF]/10 scale-[1.02]' : 'bg-white/[0.03] border-white/5'}`}
                 >
-                  <div className="mt-1 w-5 h-5 rounded-full bg-[#7B2CBF]/20 flex items-center justify-center border border-[#7B2CBF]/40 flex-shrink-0">
-                     <CheckCircle2 className="w-3 h-3 text-[#C77DFF]" />
+                  <div className={`mt-1 w-5 h-5 rounded-full flex items-center justify-center border flex-shrink-0 ${item.highlight ? 'bg-[#7B2CBF] border-[#7B2CBF] text-white shadow-lg' : 'bg-[#7B2CBF]/20 border-[#7B2CBF]/40 text-[#C77DFF]'}`}>
+                     {item.highlight ? <Star className="w-3 h-3 fill-current" /> : <CheckCircle2 className="w-3 h-3" />}
                   </div>
                   <div>
-                    <p className="text-xs font-black text-white uppercase tracking-wider">{item.title}</p>
-                    <p className="text-[10px] font-medium text-white/40">{item.desc}</p>
+                    <p className={`text-xs font-black uppercase tracking-wider ${item.highlight ? 'text-white' : 'text-white'}`}>{item.title}</p>
+                    <p className={`text-[10px] font-medium ${item.highlight ? 'text-[#C77DFF]' : 'text-white/40'}`}>{item.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -284,8 +281,8 @@ export default function Payment() {
                       <span className="text-xs font-black text-emerald-500 uppercase tracking-widest">80% OFF</span>
                    </div>
                    
-                   <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Lifetime Access + 2 Months Internship
+                   <p className="text-[11px] font-black text-[#7B2CBF] bg-[#7B2CBF]/5 px-4 py-2 rounded-xl border border-[#7B2CBF]/10 uppercase tracking-widest flex items-center gap-2 w-fit">
+                      <Star className="w-3.5 h-3.5 fill-[#7B2CBF]" /> Certificate Never Expires (Lifetime*)
                    </p>
                 </div>
 

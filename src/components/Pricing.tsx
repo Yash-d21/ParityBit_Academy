@@ -45,7 +45,7 @@ export default function Pricing() {
             Invest in Your <span className="text-[#7B2CBF]">Future.</span>
           </h2>
           <p className="mt-4 text-[#524769] text-base font-medium max-w-lg mx-auto">
-            One-time payment. Lifetime access. No subscriptions.
+            One-time payment. Lifetime* access. No subscriptions.
           </p>
         </motion.div>
 
@@ -93,9 +93,9 @@ export default function Pricing() {
                     "Hands-on Labs & Vulnerable Virtual Machines",
                     "Live Weekly Q&A Sessions with Instructor",
                     "2-Month Applied Internship (Guaranteed)",
-                    "CyberMasteryX Certification",
+                    "CyberMasteryX Certification (Lifetime* Validity)",
                     "Resume & Interview Preparation",
-                    "Lifetime Access + Free Course Updates",
+                    "Lifetime* Access + Free Course Updates",
                     "Private Discord Community Access",
                   ],
                 },

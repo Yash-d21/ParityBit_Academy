@@ -30,7 +30,7 @@ const features = [
     tag: 'Certified',
     title: 'CyberMasteryX Certification',
     description:
-      'Earn the industry-recognized CyberMasteryX Certification to validate your skills to employers.',
+      'Earn the industry-recognized CyberMasteryX Certification to validate your skills. This certificate will never expire.',
   },
 ];
 
